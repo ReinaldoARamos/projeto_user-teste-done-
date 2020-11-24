@@ -1,8 +1,8 @@
-class Controller {
+class UserController {
 
-    constructor(formId){
+    constructor(formId, TableId){ //recebe os ids
 this.formEl = document.getElementById(formId)
-
+this.TableEl = document.getElementById(TableId);
 
     }
 
@@ -12,6 +12,8 @@ this.formEl = document.getElementById(formId)
          entao ela só recebe o evento(que no caso é o submit, e deixa ele pegar o método Get Values
             fora do escopo*/ (event) => {
             event.preventDefault(); //previne o refresh no envio de formulário
+
+            this.AddLine(user);
             
             this.GetValues();
           
@@ -57,11 +59,11 @@ this.formEl = document.getElementById(formId)
 
     }
 
-    AddLine(dataUser, TableId) {
+    AddLine(dataUser) {
       
   
     
-      document.getElementById(TableId).innerHTML = //Colocamos o TableId para ele receber o Id da tabela toda
+      this.TableEl.innerHTML = //Colocamos o TableId para ele receber o Id da tabela toda
       //inserir comanbdos no HTML 
       ` <tr> 
       <td><img src="dist/img/user1-128x128.jpg" alt="User Image" class="img-circle img-sm"></td>
