@@ -6,6 +6,20 @@ this.formEl = document.getElementById(formId)
 
     }
 
+    // -- >> OnSubmit executa o código quando algum botão for pressionado(EVent Listener de click*// 
+    OnSubmit() {
+        this.formEl.addEventListener("submit", /* function  removemos a function pois ela limita o escopo
+         entao ela só recebe o evento(que no caso é o submit, e deixa ele pegar o método Get Values
+            fora do escopo*/ (event) => {
+            event.preventDefault(); //previne o refresh no envio de formulário
+            
+            this.GetValues();
+          
+        });
+
+
+    }
+
     GetValues(){
 
         let user = {}; //o Let cria uma var no escopo do método
