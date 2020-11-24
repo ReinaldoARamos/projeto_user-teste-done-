@@ -19,43 +19,10 @@ function AddLine(dataUser) {
   </td>
 </tr>`
 
-document.getElementById('table-user').appendChild(tr); //pegar a table do HTML
+ document.getElementById('table-user').appendChild(tr); //pegar a table do HTML
 
     
 }
-document.getElementById("form-user-create").addEventListener("submit", function (event) {
-    event.preventDefault(); //previne o refresh no envio de formulário
-    
-    fields.forEach(function (field) {  //pega todos os campos e  oara cada um executa um if
-        //esse if gender é para caso o campo gender esteja marcado como checked ele puxe os valores dos campos
-       
-        if (field.name == "gender") {
-            if (field.checked) {
-                user[field.name] = field.value;
-                
-            }
-            
-        } else {
 
-            user[field.name] = field.value;  //pega os valores mesmo sem check
 
-        }
-        
-    });
-
-var objectUser = new  User(
-    user.name, 
-    user.gender, 
-    user.birth, 
-    user.country, 
-    user.email, 
-    user.password, 
-    user.photo, 
-    user.admin) //um objeto é uma var que estancia ou representa uma classe
-    //o new basicamente pega o Object User e passa os valores dos objetos dentro dela, respeitando
-    //a ordem criada dentro da classe
-
-AddLine(objectUser);     //passa os valores do objeto user para o parametro da função
-   
-
-});
+//codigo de submit apagado e colocado dentro do Controller OnSubmit
