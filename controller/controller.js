@@ -31,8 +31,10 @@ this.OnSubmit(); //colocamos o OnSubmit aqui para ele já ser iniciado
 
         let user = {}; //o Let cria uma var no escopo do método
 
-        this.formEl.elements.forEach(function (field, index) {  //pega todos os campos e  oara cada um executa um if
-            //esse if gender é para caso o campo gender esteja marcado como checked ele puxe os valores dos campos
+        /*Colocamos o this.formEl entre arrays para transformar em arrays, para assim o for each funcionar */  
+      [...this.formEl.elements].forEach(function (field, index) {  //pega todos os campos e  oara cada um executa um if
+        /*Esse ... é o spread, ele serve para que não precisemos colocar o número exato de elemnentos de um array*/    
+        //esse if gender é para caso o campo gender esteja marcado como checked ele puxe os valores dos campos
            // o For Each passa por todos os campos do HTML(pos causa do Elements do FormsEl, que retorna os campos)
            //indexados
             if (field.name == "gender") {
