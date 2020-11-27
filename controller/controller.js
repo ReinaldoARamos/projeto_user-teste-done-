@@ -4,16 +4,21 @@ class UserController {
 this.formEl = document.getElementById(formId)
 this.TableEl = document.getElementById(TableId);
 
+this.OnSubmit(); //colocamos o OnSubmit aqui para ele já ser iniciado
+
     }
 
     // -- >> OnSubmit executa o código quando algum botão for pressionado(EVent Listener de click*// 
     OnSubmit() {
         this.formEl.addEventListener("submit", /* function  removemos a function pois ela limita o escopo
          entao ela só recebe o evento(que no caso é o submit, e deixa ele pegar o método Get Values
+            //Nao precisamos chamar o evento no Html Pois há um Event listener Submit, ou seja, quando o JS
+            //"ouvir" o submit ele automitcamente chama este método, não é possível chamar direto pois ele está
+            //fora do escopo global, se limitando apenas no escopo do contructor User Controller.
             fora do escopo*/ (event) => {
             event.preventDefault(); //previne o refresh no envio de formulário
 
-            this.AddLine(user);
+            this.AddLine(this.GetValues());
             
             this.GetValues();
           

@@ -1,6 +1,6 @@
-let UserController = new userController("form-user-create", "table-user"); //recebe os ids e cria um novo objeto
+let userController = new UserController("form-user-create", "table-user"); //recebe os ids e cria um novo objeto
 
-UserController.OnSubmit();
+
 
 //function addLine colocada no Controller
 
