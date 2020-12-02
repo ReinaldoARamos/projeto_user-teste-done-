@@ -18,9 +18,12 @@ this.OnSubmit(); //colocamos o OnSubmit aqui para ele já ser iniciado
             fora do escopo*/ (event) => {
             event.preventDefault(); //previne o refresh no envio de formulário
 
-            this.AddLine(this.GetValues());
+            let values =  this.GetValues(); //O problema é que o caminho da imagem
+
+            values.photo = ""; //valor será alterado
+            this.AddLine(values); //ele puxa os valores do get values no parametro
             
-            this.GetValues();
+           
           
         });
 
@@ -73,7 +76,7 @@ this.OnSubmit(); //colocamos o OnSubmit aqui para ele já ser iniciado
       this.TableEl.innerHTML = //Colocamos o TableId para ele receber o Id da tabela toda
       //inserir comanbdos no HTML 
       ` <tr> 
-      <td><img src="dist/img/user1-128x128.jpg" alt="User Image" class="img-circle img-sm"></td>
+      <td><img src="${dataUser.photo}" alt="User Image" class="img-circle img-sm"></td>
       <td>${dataUser.name}</td>
       <td>${dataUser.email}</td>
       <td>${dataUser.admin}</td>
