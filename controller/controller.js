@@ -24,6 +24,7 @@ class UserController {
         let values = this.GetValues(); //O problema é que o caminho da imagem
 
         values.photo = ""; //valor será alterado
+        this.GetPhoto();
         this.AddLine(values); //ele puxa os valores do get values no parametro
       }
     );
@@ -40,7 +41,7 @@ class UserController {
         }
 
     })
-
+    console.log(elements)
     filereader.onload = () => { //Onload é uma função anonima que executa algo após um retorno, nesse caso, o Item
 
     }
