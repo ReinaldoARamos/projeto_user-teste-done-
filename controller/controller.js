@@ -24,13 +24,16 @@ class UserController {
         let values = this.GetValues(); //O problema é que o caminho da imagem
 
         values.photo = ""; //valor será alterado
-        this.GetPhoto();
-        this.AddLine(values); //ele puxa os valores do get values no parametro
+        this.GetPhoto((content => {
+          values.photo = content;
+          this.AddLine(values); //ele puxa os valores do get values no parametro
+        }));
+       
       }
     );
   }
 
-  GetPhoto() {
+  GetPhoto(callback) {
   
     let filereader = new FileReader(); // Colocar o arquivo no let
     let elements = [...this.formEl.elements].filter(item=> { //arrow function para achar um item específico do array
@@ -41,12 +44,13 @@ class UserController {
         }
 
     })
-    console.log(elements)
+    let file = elements[0].files[0] //O arquivo do element é uma coleção, colocamos index 0 pra peggar o primeiro elemento
     filereader.onload = () => { //Onload é uma função anonima que executa algo após um retorno, nesse caso, o Item
-
+      
+      callback(filereader.result);
     }
 
-    filereader.readAsDataURL(); //ele le os dados como um caminho
+    filereader.readAsDataURL(file); //ele le os dados como um caminho
   };
 
   GetValues() {
