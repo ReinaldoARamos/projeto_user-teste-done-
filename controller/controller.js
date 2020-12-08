@@ -33,24 +33,34 @@ class UserController {
     );
   }
 
-  GetPhoto(callback) {
+  GetPhoto() {
+  //prommisse para executar função assincrona
+  //preparamos o código para 2 situações, o se funcionar ou se falhar
+  //no caso o resolve ou reject, bem explicativo
+    return promisse(function(resolve, reject){
+      let filereader = new FileReader(); // Colocar o arquivo no let
+      let elements = [...this.formEl.elements].filter(item=> { //arrow function para achar um item específico do array
+          if (item.name === 'photo') {
+              return item;
+              //essa função verifica os campos e pega o valor do photo e retorna como item
+              
+          }
   
-    let filereader = new FileReader(); // Colocar o arquivo no let
-    let elements = [...this.formEl.elements].filter(item=> { //arrow function para achar um item específico do array
-        if (item.name === 'photo') {
-            return item;
-            //essa função verifica os campos e pega o valor do photo e retorna como item
-            
-        }
+      })
+      let file = elements[0].files[0] //O arquivo do element é uma coleção, colocamos index 0 pra peggar o primeiro elemento
+      filereader.onload = () => { //Onload é uma função anonima que executa algo após um retorno, nesse caso, o Item
+        
+        resolve(filereader.result);
+      }
+      filereader.onerror((e) => {
+        
+        reject(e); //esse e retorna o evento do erro
+      })  
+      filereader.readAsDataURL(file); //ele le os dados como um caminho
 
     })
-    let file = elements[0].files[0] //O arquivo do element é uma coleção, colocamos index 0 pra peggar o primeiro elemento
-    filereader.onload = () => { //Onload é uma função anonima que executa algo após um retorno, nesse caso, o Item
-      
-      callback(filereader.result);
-    }
 
-    filereader.readAsDataURL(file); //ele le os dados como um caminho
+    
   };
 
   GetValues() {
