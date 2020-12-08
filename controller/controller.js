@@ -22,12 +22,20 @@ class UserController {
         event.preventDefault(); //previne o refresh no envio de formulário
 
         let values = this.GetValues(); //O problema é que o caminho da imagem
+        this.GetPhoto().then(
+          function (content) {
+            values.photo = content;
+            this.AddLine(values); //ele puxa os valores do get values no parametro
+          },
+          function (e) {
+            console.error();
+          }
+         
 
-        values.photo = ""; //valor será alterado
-        this.GetPhoto((content => {
-          values.photo = content;
-          this.AddLine(values); //ele puxa os valores do get values no parametro
-        }));
+        );
+        
+
+        
        
       }
     );
