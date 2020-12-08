@@ -23,12 +23,12 @@ class UserController {
 
         let values = this.GetValues(); //O problema é que o caminho da imagem
         this.GetPhoto().then(
-          function (content) {
+          (content) =>  {
             values.photo = content;
             this.AddLine(values); //ele puxa os valores do get values no parametro
           },
-          function (e) {
-            console.error();
+        (e) => {
+            console.error(e);
           }
          
 
@@ -45,7 +45,7 @@ class UserController {
   //prommisse para executar função assincrona
   //preparamos o código para 2 situações, o se funcionar ou se falhar
   //no caso o resolve ou reject, bem explicativo
-    return promisse(function(resolve, reject){
+    return new Promise((resolve, reject) => {
       let filereader = new FileReader(); // Colocar o arquivo no let
       let elements = [...this.formEl.elements].filter(item=> { //arrow function para achar um item específico do array
           if (item.name === 'photo') {
@@ -60,7 +60,7 @@ class UserController {
         
         resolve(filereader.result);
       }
-      filereader.onerror((e) => {
+      filereader.onerror = ((e) => {
         
         reject(e); //esse e retorna o evento do erro
       })  
