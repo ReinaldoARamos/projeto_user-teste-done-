@@ -64,8 +64,11 @@ class UserController {
         
         reject(e); //esse e retorna o evento do erro
       })  
+     if (file) { 
       filereader.readAsDataURL(file); //ele le os dados como um caminho
-
+     } else {
+       resolve('dist/img/Kira.png');
+     }
     })
 
     
