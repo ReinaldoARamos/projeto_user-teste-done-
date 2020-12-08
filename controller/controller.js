@@ -112,10 +112,12 @@ class UserController {
   }
 
   AddLine(dataUser) {
-    this.TableEl.innerHTML =
+
+    let tr = document.createElement('tr');
+    tr.innerHTML =
       //Colocamos o TableId para ele receber o Id da tabela toda
       //inserir comanbdos no HTML
-      ` <tr> 
+      `  
       <td><img src="${dataUser.photo}" alt="User Image" class="img-circle img-sm"></td>
       <td>${dataUser.name}</td>
       <td>${dataUser.email}</td>
@@ -125,8 +127,8 @@ class UserController {
         <button type="button" class="btn btn-primary btn-xs btn-flat">Editar</button>
         <button type="button" class="btn btn-danger btn-xs btn-flat">Excluir</button>
       </td>
-    </tr>`;
-
+    `;
+    this.TableEl.appendChild(tr);
     // document.getElementById('table-user').appendChild(tr); //pegar a table do HTML
   }
 }
