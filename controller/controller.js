@@ -3,14 +3,14 @@ class UserController {
     //recebe os ids
     this.formEl = document.getElementById(formId);
     this.TableEl = document.getElementById(TableId);
-
+    console.log(this.formEl)
     this.OnSubmit(); //colocamos o OnSubmit aqui para ele já ser iniciado
   }
 
   // -- >> OnSubmit executa o código quando algum botão for pressionado(EVent Listener de click*//
   OnSubmit() {
     this.formEl.addEventListener(
-      "submit",
+      "submit", 
       /* function  removemos a function pois ela limita o escopo
          entao ela só recebe o evento(que no caso é o submit, e deixa ele pegar o método Get Values
             //Nao precisamos chamar o evento no Html Pois há um Event listener Submit, ou seja, quando o JS
@@ -20,12 +20,18 @@ class UserController {
         event
       ) => {
         event.preventDefault(); //previne o refresh no envio de formulário
+       
+        let btn = this.formEl.querySelector("[type=submit]");
+        
+        btn.disabled = true;
 
         let values = this.GetValues(); //O problema é que o caminho da imagem
         this.GetPhoto().then(
           (content) =>  {
             values.photo = content;
             this.AddLine(values); //ele puxa os valores do get values no parametro
+            btn.disabled = false;
+            this.formEl.reset();
           },
         (e) => {
             console.error(e);
