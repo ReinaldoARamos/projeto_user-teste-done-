@@ -82,9 +82,24 @@ class UserController {
 
   GetValues() {
     let user = {}; //o Let cria uma var no escopo do método
+    let isValid = true;
 
     /*Colocamos o this.formEl entre arrays para transformar em arrays, para assim o for each funcionar */
     [...this.formEl.elements].forEach(function (field, index) {
+
+      if(['name','password' ,'email'].indexOf(field.name/*Nome do campo que passar pelo ForEAch*/) > -1 && !field.value/*field que conrtem os valores*/) 
+      {
+
+        field.parentElement.classList.add('has-error')
+
+        //parentElement - A classe "pai", ou seja, que contém o form dos campos 
+        //classList - Conjunto de métodos entre eles o Add
+        //haserroe é um template de erro do próprio curso, no caso uma classe CSS
+        isValid = false; //retorna False para poder parar o envio do formulário
+
+
+      }
+
       //pega todos os campos e  oara cada um executa um if
       /*Esse ... é o spread, ele serve para que não precisemos colocar o número exato de elemnentos de um array*/
       //esse if gender é para caso o campo gender esteja marcado como checked ele puxe os valores dos campos
@@ -103,6 +118,11 @@ class UserController {
       }
     });
 
+    if (!isValid) {
+      return false; 
+      //caso nao seja valido(campo vazio) ele para a execução do form
+      
+    }
     return new User(
       user.name,
       user.gender,
