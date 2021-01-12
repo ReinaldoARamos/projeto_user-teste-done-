@@ -26,8 +26,11 @@ class UserController {
         btn.disabled = true;
 
         let values = this.GetValues(); //O problema é que o caminho da imagem
+        if(!values) return false;
+        
         this.GetPhoto().then(
           (content) =>  {
+  
             values.photo = content;
             this.AddLine(values); //ele puxa os valores do get values no parametro
             btn.disabled = false;
