@@ -143,7 +143,8 @@ class UserController {
   AddLine(dataUser) {
 
     let tr = document.createElement('tr');
-    tr.dataset.user/*nome usado pra guardar, tipo uma var*/  = dataUser;//valores recebidos
+    tr.dataset.user/*nome usado pra guardar, tipo uma var*/  = JSON.stringify(dataUser);//valores recebidos
+    //o JSON seirializa o obj(tranforma em string)
     tr.innerHTML =
       //Colocamos o TableId para ele receber o Id da tabela toda
       //inserir comanbdos no HTML
@@ -171,7 +172,8 @@ class UserController {
     [...this.TableEl.children].forEach(tr => { //ele entra dentro do array de tableEl(literalmente o HTML todo)
      //e pega os "filhos", e para cada filho ele aumenta um numero no let user caso seja cadastrado um user
      numberUsers++;
-     console.log(tr.dataset.user);
+     console.log(JSON.parse(tr.dataset.user));
+     //o parse aqui converte a string em obj 
     } )
 
    }
