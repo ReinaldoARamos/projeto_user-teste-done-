@@ -158,6 +158,20 @@ class UserController {
       </td>
     `;
     this.TableEl.appendChild(tr);
+
+    this.updateCount();
+
+    updateCount(); { //método que serve para contar as linhas
+     let numberUsers = 0;
+     let numberAdmins = 0;
+
+     [...this.TableEl.children].forEach(tr => { //ele entra dentro do array de tableEl(literalmente o HTML todo)
+      //e pega os "filhos", e para cada filho ele aumenta um numero no let user caso seja cadastrado um user
+      numberUsers++;
+
+     } )
+
+    }
     // document.getElementById('table-user').appendChild(tr); //pegar a table do HTML
   }
 }
