@@ -165,7 +165,7 @@ class UserController {
       let user = JSON.parse(tr.dataset.user);
       //o parse aqui converte a string em obj
 
-      if (user.admin /* por padrão é true */) numberAdmins++;
+      if (user._admin /* por padrão é true , o _admin vem do users/getters*/) numberAdmins++;
     });
     document.querySelector("#number-users-admin").innerHTML = numberAdmins;
     document.querySelector("#number-users").innerHTML = numberUsers;
