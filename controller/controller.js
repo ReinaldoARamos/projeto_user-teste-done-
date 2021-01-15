@@ -3,14 +3,14 @@ class UserController {
     //recebe os ids
     this.formEl = document.getElementById(formId);
     this.TableEl = document.getElementById(TableId);
-    console.log(this.formEl)
+    console.log(this.formEl);
     this.OnSubmit(); //colocamos o OnSubmit aqui para ele já ser iniciado
   }
 
   // -- >> OnSubmit executa o código quando algum botão for pressionado(EVent Listener de click*//
   OnSubmit() {
     this.formEl.addEventListener(
-      "submit", 
+      "submit",
       /* function  removemos a function pois ela limita o escopo
          entao ela só recebe o evento(que no caso é o submit, e deixa ele pegar o método Get Values
             //Nao precisamos chamar o evento no Html Pois há um Event listener Submit, ou seja, quando o JS
@@ -20,68 +20,58 @@ class UserController {
         event
       ) => {
         event.preventDefault(); //previne o refresh no envio de formulário
-       
+
         let btn = this.formEl.querySelector("[type=submit]");
-        
+
         btn.disabled = true;
 
         let values = this.GetValues(); //O problema é que o caminho da imagem
-        if(!values) return false;
-        
+        if (!values) return false;
+
         this.GetPhoto().then(
-          (content) =>  {
-  
+          (content) => {
             values.photo = content;
             this.AddLine(values); //ele puxa os valores do get values no parametro
             btn.disabled = false;
             this.formEl.reset();
           },
-        (e) => {
+          (e) => {
             console.error(e);
           }
-         
-
         );
-        
-
-        
-       
       }
     );
   }
 
   GetPhoto() {
-  //prommisse para executar função assincrona
-  //preparamos o código para 2 situações, o se funcionar ou se falhar
-  //no caso o resolve ou reject, bem explicativo
+    //prommisse para executar função assincrona
+    //preparamos o código para 2 situações, o se funcionar ou se falhar
+    //no caso o resolve ou reject, bem explicativo
     return new Promise((resolve, reject) => {
       let filereader = new FileReader(); // Colocar o arquivo no let
-      let elements = [...this.formEl.elements].filter(item=> { //arrow function para achar um item específico do array
-          if (item.name === 'photo') {
-              return item;
-              //essa função verifica os campos e pega o valor do photo e retorna como item
-              
-          }
-  
-      })
-      let file = elements[0].files[0] //O arquivo do element é uma coleção, colocamos index 0 pra peggar o primeiro elemento
-      filereader.onload = () => { //Onload é uma função anonima que executa algo após um retorno, nesse caso, o Item
-        
-        resolve(filereader.result);
-      }
-      filereader.onerror = ((e) => {
-        
-        reject(e); //esse e retorna o evento do erro
-      })  
-     if (file) { 
-      filereader.readAsDataURL(file); //ele le os dados como um caminho
-     } else {
-       resolve('dist/img/Kira.png');
-     }
-    })
+      let elements = [...this.formEl.elements].filter((item) => {
+        //arrow function para achar um item específico do array
+        if (item.name === "photo") {
+          return item;
+          //essa função verifica os campos e pega o valor do photo e retorna como item
+        }
+      });
+      let file = elements[0].files[0]; //O arquivo do element é uma coleção, colocamos index 0 pra peggar o primeiro elemento
+      filereader.onload = () => {
+        //Onload é uma função anonima que executa algo após um retorno, nesse caso, o Item
 
-    
-  };
+        resolve(filereader.result);
+      };
+      filereader.onerror = (e) => {
+        reject(e); //esse e retorna o evento do erro
+      };
+      if (file) {
+        filereader.readAsDataURL(file); //ele le os dados como um caminho
+      } else {
+        resolve("dist/img/Kira.png");
+      }
+    });
+  }
 
   GetValues() {
     let user = {}; //o Let cria uma var no escopo do método
@@ -89,18 +79,18 @@ class UserController {
 
     /*Colocamos o this.formEl entre arrays para transformar em arrays, para assim o for each funcionar */
     [...this.formEl.elements].forEach(function (field, index) {
+      if (
+        ["name", "password", "email"].indexOf(
+          field.name /*Nome do campo que passar pelo ForEAch*/
+        ) > -1 &&
+        !field.value /*field que conrtem os valores*/
+      ) {
+        field.parentElement.classList.add("has-error");
 
-      if(['name','password' ,'email'].indexOf(field.name/*Nome do campo que passar pelo ForEAch*/) > -1 && !field.value/*field que conrtem os valores*/) 
-      {
-
-        field.parentElement.classList.add('has-error')
-
-        //parentElement - A classe "pai", ou seja, que contém o form dos campos 
+        //parentElement - A classe "pai", ou seja, que contém o form dos campos
         //classList - Conjunto de métodos entre eles o Add
         //haserroe é um template de erro do próprio curso, no caso uma classe CSS
         isValid = false; //retorna False para poder parar o envio do formulário
-
-
       }
 
       //pega todos os campos e  oara cada um executa um if
@@ -114,17 +104,14 @@ class UserController {
         }
       } else if (field.name == "admin") {
         user[field.name] = field.checked;
-      } 
-      
-      else {
+      } else {
         user[field.name] = field.value; //pega os valores mesmo sem check
       }
     });
 
     if (!isValid) {
-      return false; 
+      return false;
       //caso nao seja valido(campo vazio) ele para a execução do form
-      
     }
     return new User(
       user.name,
@@ -141,18 +128,21 @@ class UserController {
   }
 
   AddLine(dataUser) {
-
-    let tr = document.createElement('tr');
-    tr.dataset.user/*nome usado pra guardar, tipo uma var*/  = JSON.stringify(dataUser);//valores recebidos
+    let tr = document.createElement("tr");
+    tr.dataset.user /*nome usado pra guardar, tipo uma var*/ = JSON.stringify(
+      dataUser
+    ); //valores recebidos
     //o JSON seirializa o obj(tranforma em string)
     tr.innerHTML =
       //Colocamos o TableId para ele receber o Id da tabela toda
       //inserir comanbdos no HTML
       `  
-      <td><img src="${dataUser.photo}" alt="User Image" class="img-circle img-sm"></td>
+      <td><img src="${
+        dataUser.photo
+      }" alt="User Image" class="img-circle img-sm"></td>
       <td>${dataUser.name}</td>
       <td>${dataUser.email}</td>
-      <td>${(dataUser.admin ? 'Yes Yes Yes!' : ' No no no')}</td>
+      <td>${dataUser.admin ? "Yes Yes Yes!" : " No no no"}</td>
       <td>${Util.dateFormat(dataUser.register)}</td>
       <td>
         <button type="button" class="btn btn-primary btn-xs btn-flat">Editar</button>
@@ -162,21 +152,24 @@ class UserController {
     this.TableEl.appendChild(tr);
 
     this.updateCount();
-
-    
   }
-  updateCount() { //método que serve para contar as linhas
+  updateCount() {
+    //método que serve para contar as linhas
     let numberUsers = 0;
     let numberAdmins = 0;
 
-    [...this.TableEl.children].forEach(tr => { //ele entra dentro do array de tableEl(literalmente o HTML todo)
-     //e pega os "filhos", e para cada filho ele aumenta um numero no let user caso seja cadastrado um user
-     numberUsers++;
-     console.log(JSON.parse(tr.dataset.user));
-     //o parse aqui converte a string em obj 
-    } )
+    [...this.TableEl.children].forEach((tr) => {
+      //ele entra dentro do array de tableEl(literalmente o HTML todo)
+      //e pega os "filhos", e para cada filho ele aumenta um numero no let user caso seja cadastrado um user
+      numberUsers++;
+      let user = JSON.parse(tr.dataset.user);
+      //o parse aqui converte a string em obj
 
-   }
-   // document.getElementById('table-user').appendChild(tr); //pegar a table do HTML
+      if (user.admin /* por padrão é true */) numberAdmins++;
+    });
+    document.querySelector("#number-users-admin").innerHTML = numberAdmins;
+    document.querySelector("#number-users").innerHTML = numberUsers;
+
+  }
+  // document.getElementById('table-user').appendChild(tr); //pegar a table do HTML
 }
-
