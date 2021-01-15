@@ -143,6 +143,7 @@ class UserController {
   AddLine(dataUser) {
 
     let tr = document.createElement('tr');
+    tr.dataset.user/*nome usado pra guardar, tipo uma var*/  = dataUser;//valores recebidos
     tr.innerHTML =
       //Colocamos o TableId para ele receber o Id da tabela toda
       //inserir comanbdos no HTML
@@ -161,17 +162,19 @@ class UserController {
 
     this.updateCount();
 
-    updateCount(); { //método que serve para contar as linhas
-     let numberUsers = 0;
-     let numberAdmins = 0;
-
-     [...this.TableEl.children].forEach(tr => { //ele entra dentro do array de tableEl(literalmente o HTML todo)
-      //e pega os "filhos", e para cada filho ele aumenta um numero no let user caso seja cadastrado um user
-      numberUsers++;
-
-     } )
-
-    }
-    // document.getElementById('table-user').appendChild(tr); //pegar a table do HTML
+    
   }
+  updateCount() { //método que serve para contar as linhas
+    let numberUsers = 0;
+    let numberAdmins = 0;
+
+    [...this.TableEl.children].forEach(tr => { //ele entra dentro do array de tableEl(literalmente o HTML todo)
+     //e pega os "filhos", e para cada filho ele aumenta um numero no let user caso seja cadastrado um user
+     numberUsers++;
+     console.log(tr.dataset.user);
+    } )
+
+   }
+   // document.getElementById('table-user').appendChild(tr); //pegar a table do HTML
 }
+
