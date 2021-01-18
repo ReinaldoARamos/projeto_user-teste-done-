@@ -164,7 +164,22 @@ class UserController {
 
       tr.querySelector(".btn-edit").addEventListener("click", e => {
 
-        console.log(JSON.parse(tr.dataset.user)); 
+        let json = (JSON.parse(tr.dataset.user)); //JSON são as propriedades de objetos porém não mais instanciados
+        let form = document.querySelector("#form-user-update"); //pega o formulpario de update
+        for (let name  in json){ //name é a variável que recebe o nome da propriedade
+
+          let field = form.querySelector("[name= " +name.replace("_", "") + "]" )
+          //aqui ele vai entrar no JSON, ir de propridade em propriedade e recebe os campos que tem um nome
+          //igual ao que aparece no JSON, no caso a propriedade
+          // o replace pega os _ e troca por nada
+
+        } 
+
+
+
+
+
+
         //aqui nesse função foi criado um eventlistenner do botão de editar que quando é clicado retorna a tr 
         //da linha que foi clicada
         this.showPanelUpdate()
