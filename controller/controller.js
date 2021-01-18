@@ -145,10 +145,19 @@ class UserController {
       <td>${dataUser.admin ? "Yes Yes Yes!" : " No no no"}</td>
       <td>${Util.dateFormat(dataUser.register)}</td>
       <td>
-        <button type="button" class="btn btn-primary btn-xs btn-flat">Editar</button>
+        <button type="button" class="btn btn-primary btn-edit btn-xs btn-flat">Editar</button>
         <button type="button" class="btn btn-danger btn-xs btn-flat">Excluir</button>
       </td>
     `;
+
+      tr.querySelector(".btn-edit").addEventListener("click", e => {
+
+        console.log(tr); 
+        //aqui nesse função foi criado um eventlistenner do botão de editar que quando é clicado retorna a tr 
+        //da linha que foi clicada
+
+      })
+
     this.TableEl.appendChild(tr);
 
     this.updateCount();
