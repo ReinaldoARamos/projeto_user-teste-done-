@@ -152,10 +152,11 @@ class UserController {
 
       tr.querySelector(".btn-edit").addEventListener("click", e => {
 
-        console.log(tr); 
+        console.log(JSON.parse(tr.dataset.user)); 
         //aqui nesse função foi criado um eventlistenner do botão de editar que quando é clicado retorna a tr 
         //da linha que foi clicada
-
+        document.querySelector("#box-user-create").style.display = "none";
+        document.querySelector("#box-user-update").style.display = "block";
       })
 
     this.TableEl.appendChild(tr);
