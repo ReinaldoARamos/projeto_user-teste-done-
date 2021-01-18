@@ -5,8 +5,20 @@ class UserController {
     this.TableEl = document.getElementById(TableId);
     console.log(this.formEl);
     this.OnSubmit(); //colocamos o OnSubmit aqui para ele já ser iniciado
+    this.EditonCancel();
   }
 
+  EditonCancel() {
+
+    document.querySelector("#box-user-update .btn-cancel").addEventListener("click", e=> {
+      
+      
+  
+      this.showPanelCreate();
+    })
+  }
+
+  
   // -- >> OnSubmit executa o código quando algum botão for pressionado(EVent Listener de click*//
   OnSubmit() {
     this.formEl.addEventListener(
@@ -155,14 +167,29 @@ class UserController {
         console.log(JSON.parse(tr.dataset.user)); 
         //aqui nesse função foi criado um eventlistenner do botão de editar que quando é clicado retorna a tr 
         //da linha que foi clicada
-        document.querySelector("#box-user-create").style.display = "none";
-        document.querySelector("#box-user-update").style.display = "block";
+        this.showPanelUpdate()
+       // this.showPanelUpdate();
       })
 
     this.TableEl.appendChild(tr);
+  
+    
 
-    this.updateCount();
+   this.updateCount();
   }
+
+  showPanelUpdate() {
+    document.querySelector("#box-user-create").style.display = "none";
+    document.querySelector("#box-user-update").style.display = "block";
+    
+  }
+
+   showPanelCreate() {
+    document.querySelector("#box-user-create").style.display = "block";
+    document.querySelector("#box-user-update").style.display = "none";
+
+  }
+  
   updateCount() {
     //método que serve para contar as linhas
     let numberUsers = 0;
