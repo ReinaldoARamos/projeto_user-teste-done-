@@ -183,10 +183,12 @@ class UserController {
                case 'radio' :
                  field = form.querySelector("[name= " + name.replace("_", "") + "][value=" + json[name] + "]");
                  field.checked = true;
+                break;
+                 
                  //aqui ele sobreescreve a variável tornando o valor igual ao nome que ele está procurando
-               break;
+            
                case 'checkbox' :
-             field.checked = true; //os checkeds são convertidos em boolean, então isto vai manter o checked
+             field.checked = json[name]; //os checkeds são convertidos em boolean, então isto vai manter o checked
              //feito igual a true então ele ficará marcado
                break;
            
