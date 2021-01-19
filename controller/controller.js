@@ -9,16 +9,13 @@ class UserController {
   }
 
   EditonCancel() {
-
-    document.querySelector("#box-user-update .btn-cancel").addEventListener("click", e=> {
-      
-      
-  
-      this.showPanelCreate();
-    })
+    document
+      .querySelector("#box-user-update .btn-cancel")
+      .addEventListener("click", (e) => {
+        this.showPanelCreate();
+      });
   }
 
-  
   // -- >> OnSubmit executa o código quando algum botão for pressionado(EVent Listener de click*//
   OnSubmit() {
     this.formEl.addEventListener(
@@ -162,56 +159,45 @@ class UserController {
       </td>
     `;
 
-      tr.querySelector(".btn-edit").addEventListener("click", e => {
+    tr.querySelector(".btn-edit").addEventListener("click", (e) => {
+      let json = JSON.parse(tr.dataset.user); //JSON são as propriedades de objetos porém não mais instanciados
+      let form = document.querySelector("#form-user-update"); //pega o formulpario de update
+      for (let name in json) {
+        //name é a variável que recebe o nome da propriedade
 
-        let json = (JSON.parse(tr.dataset.user)); //JSON são as propriedades de objetos porém não mais instanciados
-        let form = document.querySelector("#form-user-update"); //pega o formulpario de update
-        for (let name  in json){ //name é a variável que recebe o nome da propriedade
+        let field = form.querySelector("[name= " + name.replace("_", "") + "]");
+        //aqui ele vai entrar no JSON, ir de propridade em propriedade e recebe os campos que tem um nome
+        //igual ao que aparece no JSON, no caso a propriedade
+        // o replace pega os _ e troca por nada
 
-          let field = form.querySelector("[name= " +name.replace("_", "") + "]" )
-          //aqui ele vai entrar no JSON, ir de propridade em propriedade e recebe os campos que tem um nome
-          //igual ao que aparece no JSON, no caso a propriedade
-          // o replace pega os _ e troca por nada
+        if (field) {
+          if (field.type == 'file') continue; //propriedade que ignora algo e segue o código
+          field.value = json[name];
+          //aqui nós afirmamos que o valor que o field vai receber é o do json na propriedade name
+        }
+      }
 
-          if (field.type =='file ') continue; //propriedade que ignora algo e segue o código
-          if(field){
-
-            field.value = json[name];
-            //aqui nós afirmamos que o valor que o field vai receber é o do json na propriedade name
-          }
-         
-        } 
-
-
-
-
-
-
-        //aqui nesse função foi criado um eventlistenner do botão de editar que quando é clicado retorna a tr 
-        //da linha que foi clicada
-        this.showPanelUpdate()
-       // this.showPanelUpdate();
-      })
+      //aqui nesse função foi criado um eventlistenner do botão de editar que quando é clicado retorna a tr
+      //da linha que foi clicada
+      this.showPanelUpdate();
+      // this.showPanelUpdate();
+    });
 
     this.TableEl.appendChild(tr);
-  
-    
 
-   this.updateCount();
+    this.updateCount();
   }
 
   showPanelUpdate() {
     document.querySelector("#box-user-create").style.display = "none";
     document.querySelector("#box-user-update").style.display = "block";
-    
   }
 
-   showPanelCreate() {
+  showPanelCreate() {
     document.querySelector("#box-user-create").style.display = "block";
     document.querySelector("#box-user-update").style.display = "none";
-
   }
-  
+
   updateCount() {
     //método que serve para contar as linhas
     let numberUsers = 0;
@@ -224,11 +210,11 @@ class UserController {
       let user = JSON.parse(tr.dataset.user);
       //o parse aqui converte a string em obj
 
-      if (user._admin /* por padrão é true , o _admin vem do users/getters*/) numberAdmins++;
+      if (user._admin /* por padrão é true , o _admin vem do users/getters*/)
+        numberAdmins++;
     });
     document.querySelector("#number-users-admin").innerHTML = numberAdmins;
     document.querySelector("#number-users").innerHTML = numberUsers;
-
   }
   // document.getElementById('table-user').appendChild(tr); //pegar a table do HTML
 }
