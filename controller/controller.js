@@ -173,6 +173,13 @@ class UserController {
           //igual ao que aparece no JSON, no caso a propriedade
           // o replace pega os _ e troca por nada
 
+          if (field.type =='file ') continue; //propriedade que ignora algo e segue o código
+          if(field){
+
+            field.value = json[name];
+            //aqui nós afirmamos que o valor que o field vai receber é o do json na propriedade name
+          }
+         
         } 
 
 
