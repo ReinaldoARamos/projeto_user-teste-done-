@@ -171,8 +171,30 @@ class UserController {
         // o replace pega os _ e troca por nada
 
         if (field) {
-          if (field.type == 'file') continue; //propriedade que ignora algo e segue o código
-          field.value = json[name];
+         
+          switch (field.type) {
+            case 'file':
+               continue;
+               
+            
+              
+
+               case 'radio' :
+                 field = form.querySelector("[name= " + name.replace("_", "") + "][value=" + json[name] + "]");
+                 field.checked = true;
+                 //aqui ele sobreescreve a variável tornando o valor igual ao nome que ele está procurando
+               break;
+               case 'checkbox' :
+             field.checked = true; //os checkeds são convertidos em boolean, então isto vai manter o checked
+             //feito igual a true então ele ficará marcado
+               break;
+           
+          
+             default:
+               field.value = json[name];
+             
+          }
+         
           //aqui nós afirmamos que o valor que o field vai receber é o do json na propriedade name
         }
       }
