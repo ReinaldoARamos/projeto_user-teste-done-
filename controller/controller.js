@@ -107,11 +107,12 @@ class UserController {
       //esse if gender é para caso o campo gender esteja marcado como checked ele puxe os valores dos campos
       // o For Each passa por todos os campos do HTML(pos causa do Elements do FormsEl, que retorna os campos)
       //indexados
-      if (field.name == "gender") {
+      if(field.name == "gender"){
         if (field.checked) {
-          user[field.name] = field.value;
+            user[field.name] = field.value;
         }
-      } else if (field.name == "admin") {
+    }
+     else if (field.name == "admin") {
         user[field.name] = field.checked;
       } else {
         user[field.name] = field.value; //pega os valores mesmo sem check
@@ -175,7 +176,7 @@ class UserController {
           switch (field.type) {
             case 'file':
                continue;
-               
+           
             
               
 
