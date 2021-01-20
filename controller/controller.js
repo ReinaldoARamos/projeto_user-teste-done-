@@ -1,19 +1,29 @@
 class UserController {
-  constructor(formId, TableId) {
+  constructor(formId, formUpdateId, TableId) {
     //recebe os ids
     this.formEl = document.getElementById(formId);
+    this.formUpdateEl = document.getElementById(formUpdateId);
     this.TableEl = document.getElementById(TableId);
     console.log(this.formEl);
     this.OnSubmit(); //colocamos o OnSubmit aqui para ele já ser iniciado
-    this.EditonCancel();
+    this.OnEdit ();
   }
 
-  EditonCancel() {
+  OnEdit() {
     document
       .querySelector("#box-user-update .btn-cancel")
       .addEventListener("click", (e) => {
         this.showPanelCreate();
       });
+      this.formUpdateEl.addEventListener("submit", event => {
+        event.preventDefault(); //previne o refresh no envio de formulário
+
+        let btn = this.forUpdateEl.querySelector("[type=submit]");
+
+        btn.disabled = true;
+        
+
+      })
   }
 
   // -- >> OnSubmit executa o código quando algum botão for pressionado(EVent Listener de click*//
@@ -30,7 +40,7 @@ class UserController {
       ) => {
         event.preventDefault(); //previne o refresh no envio de formulário
 
-        let btn = this.formEl.querySelector("[type=submit]");
+        let btn = this.formUpdateElEl.querySelector("[type=submit]");
 
         btn.disabled = true;
 
