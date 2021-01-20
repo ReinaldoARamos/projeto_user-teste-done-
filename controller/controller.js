@@ -18,10 +18,11 @@ class UserController {
       this.formUpdateEl.addEventListener("submit", event => {
         event.preventDefault(); //previne o refresh no envio de formulário
 
-        let btn = this.forUpdateEl.querySelector("[type=submit]");
+        let btn = this.formUpdateEl.querySelector("[type=submit]");
 
         btn.disabled = true;
-        
+        let values = this.GetValues(this.formUpdateEl); 
+
 
       })
   }
@@ -40,11 +41,11 @@ class UserController {
       ) => {
         event.preventDefault(); //previne o refresh no envio de formulário
 
-        let btn = this.formUpdateElEl.querySelector("[type=submit]");
+        let btn = this.formEl.querySelector("[type=submit]");
 
         btn.disabled = true;
 
-        let values = this.GetValues(); //O problema é que o caminho da imagem
+        let values = this.GetValues(this.formEl); //O problema é que o caminho da imagem
         if (!values) return false;
 
         this.GetPhoto().then(
@@ -92,12 +93,12 @@ class UserController {
     });
   }
 
-  GetValues() {
+  GetValues(formEl/*Nesse caso é uma variável passada como parâmetro, e não o let que pega o id*/ ) {
     let user = {}; //o Let cria uma var no escopo do método
     let isValid = true;
 
     /*Colocamos o this.formEl entre arrays para transformar em arrays, para assim o for each funcionar */
-    [...this.formEl.elements].forEach(function (field, index) {
+    [...formEl.elements].forEach(function (field, index) { //remoção do this para que o FOrmEl seja apenas uma variável
       if (
         ["name", "password", "email"].indexOf(
           field.name /*Nome do campo que passar pelo ForEAch*/
