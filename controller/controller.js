@@ -24,7 +24,7 @@ class UserController {
         let tr = this.TableEl.rows[index]; //essa tr pega o valor retornando pelo index acima
         tr.dataset.user = JSON.stringify(values);
 
-        tr.innerHTML = //usa a template string e substitui a row selecionada pelos novos valores passados no edit
+        tr.innerHTML = //usa a template string e substitui a row selecionada pelos novos valores passados no edit     
         //Colocamos o TableId para ele receber o Id da tabela toda
         //inserir comanbdos no HTML
         `  
@@ -38,7 +38,8 @@ class UserController {
           <button type="button" class="btn btn-danger btn-xs btn-flat">Excluir</button>
         </td>
       `;
-
+      this.addEventsTR(tr);
+      this.updateCount();
       })
   }
 
@@ -186,10 +187,19 @@ class UserController {
       </td>
     `;
 
+   this.addEventsTR(tr);
+
+    this.TableEl.appendChild(tr);
+
+    this.updateCount();
+  }
+
+  addEventsTR(tr) {
+
     tr.querySelector(".btn-edit").addEventListener("click", (e) => {
       let json = JSON.parse(tr.dataset.user); //JSON são as propriedades de objetos porém não mais instanciados
-      let form = document.querySelector("#form-user-update"); //pega o formulpario de update
-      form.dataset.trIndex = tr.sectionRowIndex; //seta o dado na tr do index, no caso, sua localização
+      
+      this.formUpdateEl.dataset.trIndex = tr.sectionRowIndex; //seta o dado na tr do index, no caso, sua localização
       for (let name in json) {
         //name é a variável que recebe o nome da propriedade
 
@@ -208,7 +218,7 @@ class UserController {
               
 
                case 'radio' :
-                 field = form.querySelector("[name= " + name.replace("_", "") + "][value=" + json[name] + "]");
+                 field =  this.formUpdateEl.querySelector("[name= " + name.replace("_", "") + "][value=" + json[name] + "]");
                  field.checked = true;
                 break;
                  
@@ -228,16 +238,13 @@ class UserController {
           //aqui nós afirmamos que o valor que o field vai receber é o do json na propriedade name
         }
       }
+      this.formUpdateEl.querySelector
 
       //aqui nesse função foi criado um eventlistenner do botão de editar que quando é clicado retorna a tr
       //da linha que foi clicada
       this.showPanelUpdate();
       // this.showPanelUpdate();
     });
-
-    this.TableEl.appendChild(tr);
-
-    this.updateCount();
   }
 
   showPanelUpdate() {
