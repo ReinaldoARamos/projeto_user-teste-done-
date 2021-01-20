@@ -10,9 +10,7 @@ class UserController {
   }
 
   OnEdit() {
-    document
-      .querySelector("#box-user-update .btn-cancel")
-      .addEventListener("click", (e) => {
+    document.querySelector("#box-user-update .btn-cancel").addEventListener("click", (e) => {
         this.showPanelCreate();
       });
       this.formUpdateEl.addEventListener("submit", event => {
@@ -21,8 +19,25 @@ class UserController {
         let btn = this.formUpdateEl.querySelector("[type=submit]");
 
         btn.disabled = true;
-        let values = this.GetValues(this.formUpdateEl); 
+        let values = this.GetValues(this.formUpdateEl); //recebe os valores por parâmetro
+        let index = this.formUpdateEl.dataset.trIndex; //esse let index pega a localização de index da row
+        let tr = this.TableEl.rows[index]; //essa tr pega o valor retornando pelo index acima
+        tr.dataset.user = JSON.stringify(values);
 
+        tr.innerHTML = //usa a template string e substitui a row selecionada pelos novos valores passados no edit
+        //Colocamos o TableId para ele receber o Id da tabela toda
+        //inserir comanbdos no HTML
+        `  
+        <td><img src="${values.photo}" alt="User Image" class="img-circle img-sm"></td>
+        <td>${values.name}</td>
+        <td>${values.email}</td>
+        <td>${values.admin ? "Yes Yes Yes!" : " No no no"}</td>
+        <td>${Util.dateFormat(values.register)}</td>
+        <td>
+          <button type="button" class="btn btn-primary btn-edit btn-xs btn-flat">Editar</button>
+          <button type="button" class="btn btn-danger btn-xs btn-flat">Excluir</button>
+        </td>
+      `;
 
       })
   }
@@ -174,6 +189,7 @@ class UserController {
     tr.querySelector(".btn-edit").addEventListener("click", (e) => {
       let json = JSON.parse(tr.dataset.user); //JSON são as propriedades de objetos porém não mais instanciados
       let form = document.querySelector("#form-user-update"); //pega o formulpario de update
+      form.dataset.trIndex = tr.sectionRowIndex; //seta o dado na tr do index, no caso, sua localização
       for (let name in json) {
         //name é a variável que recebe o nome da propriedade
 
