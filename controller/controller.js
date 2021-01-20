@@ -203,7 +203,7 @@ class UserController {
       for (let name in json) {
         //name é a variável que recebe o nome da propriedade
 
-        let field = form.querySelector("[name= " + name.replace("_", "") + "]");
+        let field = this.formUpdateEl.querySelector("[name= " + name.replace("_", "") + "]");
         //aqui ele vai entrar no JSON, ir de propridade em propriedade e recebe os campos que tem um nome
         //igual ao que aparece no JSON, no caso a propriedade
         // o replace pega os _ e troca por nada
@@ -238,7 +238,7 @@ class UserController {
           //aqui nós afirmamos que o valor que o field vai receber é o do json na propriedade name
         }
       }
-      this.formUpdateEl.querySelector
+      this.formUpdateEl.querySelector(".photo").src = json._photo;
 
       //aqui nesse função foi criado um eventlistenner do botão de editar que quando é clicado retorna a tr
       //da linha que foi clicada
