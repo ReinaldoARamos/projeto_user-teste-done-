@@ -6,36 +6,39 @@ class UserController {
     this.TableEl = document.getElementById(TableId);
     console.log(this.formEl);
     this.OnSubmit(); //colocamos o OnSubmit aqui para ele já ser iniciado
-    this.OnEdit ();
+    this.OnEdit();
   }
 
   OnEdit() {
-    document.querySelector("#box-user-update .btn-cancel").addEventListener("click", (e) => {
+    document
+      .querySelector("#box-user-update .btn-cancel")
+      .addEventListener("click", (e) => {
         this.showPanelCreate();
       });
-      this.formUpdateEl.addEventListener("submit", event => {
-        event.preventDefault(); //previne o refresh no envio de formulário
+    this.formUpdateEl.addEventListener("submit", (event) => {
+      event.preventDefault(); //previne o refresh no envio de formulário
 
-        let btn = this.formUpdateEl.querySelector("[type=submit]");
+      let btn = this.formUpdateEl.querySelector("[type=submit]");
 
-        btn.disabled = true;
-        let values = this.GetValues(this.formUpdateEl); //recebe os valores por parâmetro
-        let index = this.formUpdateEl.dataset.trIndex; //esse let index pega a localização de index da row
-        let tr = this.TableEl.rows[index]; //essa tr pega o valor retornando pelo index acima
-        let userOld =   JSON.parse(tr.dataset.user); //o parse torna um obj de fato 
-        let result = Object.assign({}, userOld, values); //os valores a direita substituem os da esquerad
-        //values substitui os valoers que não existem ou que existem em userOld e userOld substitui o vazio
-        if (!values.photo) result._photo =   userOld._photo;
-          
-        
-        tr.dataset.user = JSON.stringify(result);
-        
+      btn.disabled = true;
+      let values = this.GetValues(this.formUpdateEl); //recebe os valores por parâmetro
+      let index = this.formUpdateEl.dataset.trIndex; //esse let index pega a localização de index da row
+      let tr = this.TableEl.rows[index]; //essa tr pega o valor retornando pelo index acima
+      let userOld = JSON.parse(tr.dataset.user); //o parse torna um obj de fato
+      let result = Object.assign({}, userOld, values); //os valores a direita substituem os da esquerad
+      //values substitui os valoers que não existem ou que existem em userOld e userOld substitui o vazio
+      if (!values.photo) result._photo = userOld._photo;
 
-        tr.innerHTML = //usa a template string e substitui a row selecionada pelos novos valores passados no edit     
+      tr.dataset.user = JSON.stringify(result);
+
+      tr.innerHTML =
+        //usa a template string e substitui a row selecionada pelos novos valores passados no edit
         //Colocamos o TableId para ele receber o Id da tabela toda
         //inserir comanbdos no HTML
         `  
-        <td><img src="${result._photo}" alt="User Image" class="img-circle img-sm"></td>
+        <td><img src="${
+          result._photo
+        }" alt="User Image" class="img-circle img-sm"></td>
         <td>${result._name}</td>
         <td>${result._email}</td>
         <td>${result._admin ? "Yes Yes Yes!" : " No no no"}</td>
@@ -48,10 +51,21 @@ class UserController {
       this.addEventsTR(tr);
       this.updateCount();
 
-      btn.disabled = false; 
+      btn.disabled = false;
       this.formUpdateEl.reset;
       this.showPanelCreate();
-      })
+      this.GetPhoto(this.formEl).then(
+        (content) => {
+          values.photo = content;
+          this.AddLine(values); //ele puxa os valores do get values no parametro
+          btn.disabled = false;
+          this.formEl.reset();
+        },
+        (e) => {
+          console.error(e);
+        }
+      );
+    });
   }
 
   // -- >> OnSubmit executa o código quando algum botão for pressionado(EVent Listener de click*//
@@ -75,7 +89,7 @@ class UserController {
         let values = this.GetValues(this.formEl); //O problema é que o caminho da imagem
         if (!values) return false;
 
-        this.GetPhoto().then(
+        this.GetPhoto(this.formEl).then(
           (content) => {
             values.photo = content;
             this.AddLine(values); //ele puxa os valores do get values no parametro
@@ -90,13 +104,13 @@ class UserController {
     );
   }
 
-  GetPhoto() {
+  GetPhoto(formEl) {
     //prommisse para executar função assincrona
     //preparamos o código para 2 situações, o se funcionar ou se falhar
     //no caso o resolve ou reject, bem explicativo
     return new Promise((resolve, reject) => {
       let filereader = new FileReader(); // Colocar o arquivo no let
-      let elements = [...this.formEl.elements].filter((item) => {
+      let elements = [...formEl.elements].filter((item) => {
         //arrow function para achar um item específico do array
         if (item.name === "photo") {
           return item;
@@ -120,12 +134,15 @@ class UserController {
     });
   }
 
-  GetValues(formEl/*Nesse caso é uma variável passada como parâmetro, e não o let que pega o id*/ ) {
+  GetValues(
+    formEl /*Nesse caso é uma variável passada como parâmetro, e não o let que pega o id*/
+  ) {
     let user = {}; //o Let cria uma var no escopo do método
     let isValid = true;
 
     /*Colocamos o this.formEl entre arrays para transformar em arrays, para assim o for each funcionar */
-    [...formEl.elements].forEach(function (field, index) { //remoção do this para que o FOrmEl seja apenas uma variável
+    [...formEl.elements].forEach(function (field, index) {
+      //remoção do this para que o FOrmEl seja apenas uma variável
       if (
         ["name", "password", "email"].indexOf(
           field.name /*Nome do campo que passar pelo ForEAch*/
@@ -145,12 +162,11 @@ class UserController {
       //esse if gender é para caso o campo gender esteja marcado como checked ele puxe os valores dos campos
       // o For Each passa por todos os campos do HTML(pos causa do Elements do FormsEl, que retorna os campos)
       //indexados
-      if(field.name == "gender"){
+      if (field.name == "gender") {
         if (field.checked) {
-            user[field.name] = field.value;
+          user[field.name] = field.value;
         }
-    }
-     else if (field.name == "admin") {
+      } else if (field.name == "admin") {
         user[field.name] = field.checked;
       } else {
         user[field.name] = field.value; //pega os valores mesmo sem check
@@ -198,7 +214,7 @@ class UserController {
       </td>
     `;
 
-   this.addEventsTR(tr);
+    this.addEventsTR(tr);
 
     this.TableEl.appendChild(tr);
 
@@ -206,46 +222,47 @@ class UserController {
   }
 
   addEventsTR(tr) {
-
     tr.querySelector(".btn-edit").addEventListener("click", (e) => {
       let json = JSON.parse(tr.dataset.user); //JSON são as propriedades de objetos porém não mais instanciados
-      
+
       this.formUpdateEl.dataset.trIndex = tr.sectionRowIndex; //seta o dado na tr do index, no caso, sua localização
       for (let name in json) {
         //name é a variável que recebe o nome da propriedade
 
-        let field = this.formUpdateEl.querySelector("[name= " + name.replace("_", "") + "]");
+        let field = this.formUpdateEl.querySelector(
+          "[name= " + name.replace("_", "") + "]"
+        );
         //aqui ele vai entrar no JSON, ir de propridade em propriedade e recebe os campos que tem um nome
         //igual ao que aparece no JSON, no caso a propriedade
         // o replace pega os _ e troca por nada
 
         if (field) {
-         
           switch (field.type) {
-            case 'file':
-               continue;
-           
-            
-              
+            case "file":
+              continue;
 
-               case 'radio' :
-                 field =  this.formUpdateEl.querySelector("[name= " + name.replace("_", "") + "][value=" + json[name] + "]");
-                 field.checked = true;
-                break;
-                 
-                 //aqui ele sobreescreve a variável tornando o valor igual ao nome que ele está procurando
-            
-               case 'checkbox' :
-             field.checked = json[name]; //os checkeds são convertidos em boolean, então isto vai manter o checked
-             //feito igual a true então ele ficará marcado
-               break;
-           
-          
-             default:
-               field.value = json[name];
-             
+            case "radio":
+              field = this.formUpdateEl.querySelector(
+                "[name= " +
+                  name.replace("_", "") +
+                  "][value=" +
+                  json[name] +
+                  "]"
+              );
+              field.checked = true;
+              break;
+
+            //aqui ele sobreescreve a variável tornando o valor igual ao nome que ele está procurando
+
+            case "checkbox":
+              field.checked = json[name]; //os checkeds são convertidos em boolean, então isto vai manter o checked
+              //feito igual a true então ele ficará marcado
+              break;
+
+            default:
+              field.value = json[name];
           }
-         
+
           //aqui nós afirmamos que o valor que o field vai receber é o do json na propriedade name
         }
       }
