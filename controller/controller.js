@@ -27,15 +27,21 @@ class UserController {
       let userOld = JSON.parse(tr.dataset.user); //o parse torna um obj de fato
       let result = Object.assign({}, userOld, values); //os valores a direita substituem os da esquerad
       //values substitui os valoers que não existem ou que existem em userOld e userOld substitui o vazio
-      if (!values.photo) result._photo = userOld._photo;
 
-      tr.dataset.user = JSON.stringify(result);
+      this.GetPhoto(this.formUpdateEl).then(
+        (content) => {
+          if (!values.photo) {
+            result._photo = userOld._photo;
+          } else {
+            result._photo = content;
+          }
+          tr.dataset.user = JSON.stringify(result);
 
-      tr.innerHTML =
-        //usa a template string e substitui a row selecionada pelos novos valores passados no edit
-        //Colocamos o TableId para ele receber o Id da tabela toda
-        //inserir comanbdos no HTML
-        `  
+          tr.innerHTML =
+            //usa a template string e substitui a row selecionada pelos novos valores passados no edit
+            //Colocamos o TableId para ele receber o Id da tabela toda
+            //inserir comanbdos no HTML
+            `  
         <td><img src="${
           result._photo
         }" alt="User Image" class="img-circle img-sm"></td>
@@ -48,18 +54,12 @@ class UserController {
           <button type="button" class="btn btn-danger btn-xs btn-flat">Excluir</button>
         </td>
       `;
-      this.addEventsTR(tr);
-      this.updateCount();
+          this.addEventsTR(tr);
+          this.updateCount();
 
-      btn.disabled = false;
-      this.formUpdateEl.reset;
-      this.showPanelCreate();
-      this.GetPhoto(this.formEl).then(
-        (content) => {
-          values.photo = content;
-          this.AddLine(values); //ele puxa os valores do get values no parametro
+          this.formUpdateEl.reset();
           btn.disabled = false;
-          this.formEl.reset();
+          this.showPanelCreate();
         },
         (e) => {
           console.error(e);
