@@ -51,7 +51,7 @@ class UserController {
         <td>${Util.dateFormat(result._register)}</td>
         <td>
           <button type="button" class="btn btn-primary btn-edit btn-xs btn-flat">Editar</button>
-          <button type="button" class="btn btn-danger btn-xs btn-flat">Excluir</button>
+          <button type="button" class="btn btn-danger btn-delete btn-xs btn-flat">Excluir</button>
         </td>
       `;
           this.addEventsTR(tr);
@@ -210,7 +210,7 @@ class UserController {
       <td>${Util.dateFormat(dataUser.register)}</td>
       <td>
         <button type="button" class="btn btn-primary btn-edit btn-xs btn-flat">Editar</button>
-        <button type="button" class="btn btn-danger btn-xs btn-flat">Excluir</button>
+        <button type="button" class="btn btn-danger btn-delete btn-xs btn-flat">Excluir</button>
       </td>
     `;
 
@@ -222,6 +222,16 @@ class UserController {
   }
 
   addEventsTR(tr) {
+
+    tr.querySelector(".btn-delete").addEventListener("click", (e) => {
+      if(confirm("Deseja realmente deletar este usuário")){
+
+        tr.remove();
+        this.updateCount();
+      }
+
+    });
+
     tr.querySelector(".btn-edit").addEventListener("click", (e) => {
       let json = JSON.parse(tr.dataset.user); //JSON são as propriedades de objetos porém não mais instanciados
 
