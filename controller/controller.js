@@ -190,9 +190,16 @@ class UserController {
 
     //essa função foi criada para passar por todos os fields e pegar os valores
   }
+insert(data){
 
+sessionStorage.setItem("", ""); //aqui é onde gera a chave e o valor,
+// sendo o primeiro a chave e o segundo o valor
+
+}
   AddLine(dataUser) {
+    
     let tr = document.createElement("tr");
+    this.insert(dataUser);
     tr.dataset.user /*nome usado pra guardar, tipo uma var*/ = JSON.stringify(
       dataUser
     ); //valores recebidos
