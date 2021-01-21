@@ -25,6 +25,9 @@ class UserController {
         let userOld =   JSON.parse(tr.dataset.user); //o parse torna um obj de fato 
         let result = Object.assign({}, userOld, values); //os valores a direita substituem os da esquerad
         //values substitui os valoers que não existem ou que existem em userOld e userOld substitui o vazio
+        if (!values.photo) result._photo =   userOld._photo;
+          
+        
         tr.dataset.user = JSON.stringify(result);
         
 
@@ -32,11 +35,11 @@ class UserController {
         //Colocamos o TableId para ele receber o Id da tabela toda
         //inserir comanbdos no HTML
         `  
-        <td><img src="${result.photo}" alt="User Image" class="img-circle img-sm"></td>
-        <td>${result.name}</td>
-        <td>${result.email}</td>
-        <td>${result.admin ? "Yes Yes Yes!" : " No no no"}</td>
-        <td>${Util.dateFormat(result.register)}</td>
+        <td><img src="${result._photo}" alt="User Image" class="img-circle img-sm"></td>
+        <td>${result._name}</td>
+        <td>${result._email}</td>
+        <td>${result._admin ? "Yes Yes Yes!" : " No no no"}</td>
+        <td>${Util.dateFormat(result._register)}</td>
         <td>
           <button type="button" class="btn btn-primary btn-edit btn-xs btn-flat">Editar</button>
           <button type="button" class="btn btn-danger btn-xs btn-flat">Excluir</button>
@@ -44,6 +47,10 @@ class UserController {
       `;
       this.addEventsTR(tr);
       this.updateCount();
+
+      btn.disabled = false; 
+      this.formUpdateEl.reset;
+      this.showPanelCreate();
       })
   }
 
