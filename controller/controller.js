@@ -22,17 +22,21 @@ class UserController {
         let values = this.GetValues(this.formUpdateEl); //recebe os valores por parâmetro
         let index = this.formUpdateEl.dataset.trIndex; //esse let index pega a localização de index da row
         let tr = this.TableEl.rows[index]; //essa tr pega o valor retornando pelo index acima
-        tr.dataset.user = JSON.stringify(values);
+        let userOld =   JSON.parse(tr.dataset.user); //o parse torna um obj de fato 
+        let result = Object.assign({}, userOld, values); //os valores a direita substituem os da esquerad
+        //values substitui os valoers que não existem ou que existem em userOld e userOld substitui o vazio
+        tr.dataset.user = JSON.stringify(result);
+        
 
         tr.innerHTML = //usa a template string e substitui a row selecionada pelos novos valores passados no edit     
         //Colocamos o TableId para ele receber o Id da tabela toda
         //inserir comanbdos no HTML
         `  
-        <td><img src="${values.photo}" alt="User Image" class="img-circle img-sm"></td>
-        <td>${values.name}</td>
-        <td>${values.email}</td>
-        <td>${values.admin ? "Yes Yes Yes!" : " No no no"}</td>
-        <td>${Util.dateFormat(values.register)}</td>
+        <td><img src="${result.photo}" alt="User Image" class="img-circle img-sm"></td>
+        <td>${result.name}</td>
+        <td>${result.email}</td>
+        <td>${result.admin ? "Yes Yes Yes!" : " No no no"}</td>
+        <td>${Util.dateFormat(result.register)}</td>
         <td>
           <button type="button" class="btn btn-primary btn-edit btn-xs btn-flat">Editar</button>
           <button type="button" class="btn btn-danger btn-xs btn-flat">Excluir</button>
