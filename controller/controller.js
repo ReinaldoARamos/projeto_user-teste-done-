@@ -190,13 +190,27 @@ class UserController {
 
     //essa função foi criada para passar por todos os fields e pegar os valores
   }
-insert(data){
-  let users = [];
 
-  if (sessionStorage.getItem("users")) {
-    users = JSON.parse(JSON.stringify(users))
-    
+  getUserStorage(){
+    let users = [];
+
+    if (sessionStorage.getItem("users")) {
+      users = JSON.parse(sessionStorage.getItem("users"))
+      
+    }
+    return users;
+
   }
+
+  selectAll(){
+    this.getUserStorage();
+
+
+  }
+
+
+insert(data){
+  this.getUserStorage()
   users.push(data);
 
 sessionStorage.setItem("users", JSON.stringify(users)); //aqui é onde gera a chave e o valor,
