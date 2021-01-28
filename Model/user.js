@@ -62,4 +62,7 @@ class User{
         this._photo = value
         
     }
+    loadFromJSON(json){
+        
+    }
 }
