@@ -192,9 +192,14 @@ class UserController {
   }
 insert(data){
   let users = [];
+
+  if (sessionStorage.getItem("users")) {
+    users = JSON.parse(JSON.stringify(users))
+    
+  }
   users.push(data);
 
-sessionStorage.setItem("user", JSON.stringify(users)); //aqui é onde gera a chave e o valor,
+sessionStorage.setItem("users", JSON.stringify(users)); //aqui é onde gera a chave e o valor,
 // sendo o primeiro a chave e o segundo o valor
 
 }
