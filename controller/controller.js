@@ -198,12 +198,18 @@ class UserController {
       users = JSON.parse(sessionStorage.getItem("users"))
       
     }
-    return users;
+    return users; 
 
   }
 
   selectAll(){
-    this.getUserStorage();
+    let users = this.getUserStorage();
+    users.forEach(dataUser => {
+
+    let user =  new User();
+    user.LoadFromJSON(dataUser);
+      this.AddLine(user);
+    })
 
 
   }
