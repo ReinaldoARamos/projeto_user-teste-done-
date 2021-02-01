@@ -93,7 +93,10 @@
           this.GetPhoto(this.formEl).then(
             (content) => {
               values.photo = content;
+
+              this.insert(values);
               this.AddLine(values); //ele puxa os valores do get values no parametro
+              
               btn.disabled = false;
               this.formEl.reset();
             },
@@ -231,7 +234,7 @@
     AddLine(dataUser) {
       
       let tr = document.createElement("tr");
-      this.insert(dataUser);
+     
       tr.dataset.user /*nome usado pra guardar, tipo uma var*/ = JSON.stringify(
         dataUser
       ); //valores recebidos
