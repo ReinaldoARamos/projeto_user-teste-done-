@@ -216,7 +216,7 @@ class UserController {
 
 
 insert(data){
-  this.getUserStorage()
+  let users  = this.getUserStorage()
   users.push(data);
 
 sessionStorage.setItem("users", JSON.stringify(users)); //aqui é onde gera a chave e o valor,
