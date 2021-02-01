@@ -36,9 +36,11 @@ class UserController {
           } else {
             result._photo = content;
           }
-         
+         let user = new User();
+         user.loadFromJSON(result);
 
-        this.getTr(user, tr); //
+        this.getTr(user, tr); //o tr é passado pois já está criado
+        
         
           this.updateCount();
 
