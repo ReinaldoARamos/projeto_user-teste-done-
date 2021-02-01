@@ -209,6 +209,10 @@ class UserController {
     let user =  new User();
     user.LoadFromJSON(dataUser);
       this.AddLine(user);
+      //O SelectALl pega a coleção do user storage e instancia, em seguida, essa instancia
+      //recebe os valores do loadfromJSon(que se iguala a cada atributo do objeto json)
+      // e em seguida manda pro addLine, que por sua vez irá mandar os valores recebidos 
+      //pelo parâmetro até a template string
     })
 
 
