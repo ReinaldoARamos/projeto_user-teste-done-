@@ -75,7 +75,28 @@ class User{
                     this[name] = json[name]
             }
 
+
+
            
         }
+    }
+
+  static  getUserStorage() {
+        let users = [];
+    
+        if (localStorage.getItem("users")) {
+          users = JSON.parse(localStorage.getItem("users"));
+        }
+        return users;
+      }
+
+    save(){
+        let users = this.getUserStorage();
+        users.push(data);
+    
+        // sessionStorage.setItem("users", JSON.stringify(users)); //aqui é onde gera a chave e o valor,
+        localStorage.setItem("users", JSON.stringify(users)); //aqui é onde gera a chave e o valor,
+        // sendo o primeiro a chave e o segundo o valor
+
     }
 }
