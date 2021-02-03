@@ -93,12 +93,24 @@ class User{
         return users;
       }
 
+      getNewId(){
+
+        if (!window.id) window.id = 0; // a partir do igual nós podemos chamar o id sem window, pois ele já está referenciado
+
+        id ++ ; 
+        return id;
+      }
     save(){
         let users = this.getUserStorage(); //retorna todos os usuários em um array e faz um parse
 
         if (this.id > 0){ //verifica se há um id 
             let user = users.filter(u => {return u._id === this.id}); //caso haja um id ele filtra o usuário que possuiu o mesmo id 
             //que tem o mesmo id que o item, retornando todo os dados daquele objeto
+
+        } else{
+
+            this.id = this.getNewId();
+
 
         }
         users.push(data);
