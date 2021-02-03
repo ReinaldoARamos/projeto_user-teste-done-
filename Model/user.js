@@ -1,7 +1,7 @@
 class User{
 
     constructor(name, gender, birth, country, email, password, photo, admin){
-
+        this._id = 
           this._name = name;
           this._gender = gender;
           this._birth = birth;
@@ -13,6 +13,9 @@ class User{
           this._register = new Date();
     } 
    
+    get id(){
+        return this._id;
+    }
     get register(){
         return this._register;
     }
@@ -92,6 +95,11 @@ class User{
 
     save(){
         let users = this.getUserStorage();
+
+        if (this.id > 0){
+            let user = users.filter(u => {return u._id === this.id});
+
+        }
         users.push(data);
     
         // sessionStorage.setItem("users", JSON.stringify(users)); //aqui é onde gera a chave e o valor,
