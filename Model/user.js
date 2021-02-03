@@ -94,10 +94,11 @@ class User{
       }
 
     save(){
-        let users = this.getUserStorage();
+        let users = this.getUserStorage(); //retorna todos os usuários em um array e faz um parse
 
-        if (this.id > 0){
-            let user = users.filter(u => {return u._id === this.id});
+        if (this.id > 0){ //verifica se há um id 
+            let user = users.filter(u => {return u._id === this.id}); //caso haja um id ele filtra o usuário que possuiu o mesmo id 
+            //que tem o mesmo id que o item, retornando todo os dados daquele objeto
 
         }
         users.push(data);
