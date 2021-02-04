@@ -38,6 +38,7 @@ class UserController {
           }
          let user = new User();
          user.loadFromJSON(result);
+         user.save();
 
         this.getTr(user, tr); //o tr é passado pois já está criado
         
@@ -80,7 +81,7 @@ class UserController {
           (content) => {
             values.photo = content;
 
-            this.insert(values);
+            values.save(); //adiciona ids, localiza e substitui no array
             this.AddLine(values); //ele puxa os valores do get values no parametro
 
             btn.disabled = false;
