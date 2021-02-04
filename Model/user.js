@@ -118,12 +118,12 @@ class User{
             this._id = this.getNewId();
             users.push(this);
     
-            // sessionStorage.setItem("users", JSON.stringify(users)); //aqui é onde gera a chave e o valor,
-            localStorage.setItem("users", JSON.stringify(users)); //aqui é onde gera a chave e o valor,
-            // sendo o primeiro a chave e o segundo o valor
+          
 
-        }
-        
+        } 
+         // sessionStorage.setItem("users", JSON.stringify(users)); //aqui é onde gera a chave e o valor,
+         localStorage.setItem("users", JSON.stringify(users)); //aqui é onde gera a chave e o valor,
+         // sendo o primeiro a chave e o segundo o valor
 
     }
 }
