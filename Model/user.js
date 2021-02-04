@@ -84,7 +84,7 @@ class User{
         }
     }
 
-  static  getUserStorage() {
+    getUserStorage() {
         let users = [];
     
         if (localStorage.getItem("users")) {
