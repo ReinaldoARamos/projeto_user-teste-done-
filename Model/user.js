@@ -104,8 +104,14 @@ class User{
         let users = this.getUserStorage(); //retorna todos os usuários em um array e faz um parse
 
         if (this.id > 0){ //verifica se há um id 
-            let user = users.filter(u => {return u._id === this.id}); //caso haja um id ele filtra o usuário que possuiu o mesmo id 
-            //que tem o mesmo id que o item, retornando todo os dados daquele objeto
+          users.map(u => {
+            if( u._id === this.id){
+
+                u = this; //lembrando que o this é o próprio user
+            }
+
+            return u;
+          });
 
         } else{
 
