@@ -204,14 +204,7 @@ class UserController {
     });
   }
 
-  insert(data) {
-    let users = this.getUserStorage();
-    users.push(data);
-
-    // sessionStorage.setItem("users", JSON.stringify(users)); //aqui é onde gera a chave e o valor,
-    localStorage.setItem("users", JSON.stringify(users)); //aqui é onde gera a chave e o valor,
-    // sendo o primeiro a chave e o segundo o valor
-  }
+ 
   AddLine(dataUser) {
     let tr = this.getTr(dataUser); //o valor do let é o que aconteceu dentro do método ficou registrado nela
 
