@@ -244,7 +244,11 @@ class UserController {
   addEventsTR(tr) {
     tr.querySelector(".btn-delete").addEventListener("click", (e) => {
       if (confirm("Deseja realmente deletar este usuário")) {
-        tr.remove();
+       let user = new User();
+       user.loadFromJSON(JSON.parse(tr.dataset.user))
+       //lembrando que JSOn é string e parse o serializa em obj real
+       user.remove();
+       tr.remove();
         this.updateCount();
       }
     });
