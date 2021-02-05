@@ -85,10 +85,12 @@ class User {
   }
 
   getNewId() {
-    if (!window.id) window.id = 0; // a partir do igual nós podemos chamar o id sem window, pois ele já está referenciado
+    let userID = parseInt(localStorage.getItem("userID"));
+    if (!userID) userID = 0; // a partir do igual nós podemos chamar o id sem window, pois ele já está referenciado
 
-    id++;
-    return id;
+    userID++;
+    localStorage.setItem("userID", userID)
+    return userID;
   }
   save() {
     let users = User.getUserStorage(); //retorna todos os usuários em um array e faz um parse
