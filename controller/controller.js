@@ -247,7 +247,7 @@ class UserController {
        let user = new User();
        user.loadFromJSON(JSON.parse(tr.dataset.user))
        //lembrando que JSOn é string e parse o serializa em obj real
-       user.remove();
+       user.deleteUser();
        tr.remove();
         this.updateCount();
       }
