@@ -114,12 +114,13 @@ class User {
   deleteUser(){
 
    let  users = User.getUserStorage();
-  users.forEach((UserData, Index) => {
+  users.forEach((UserData, index) => {
     if (this._id == UserData._id) {
-      
+      users.splice(index, 1);
       
     }
     
   });
+  localStorage.setItem("users", JSON.stringify(users));
   }
 }
