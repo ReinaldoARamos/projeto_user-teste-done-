@@ -182,17 +182,9 @@ class UserController {
     //essa função foi criada para passar por todos os fields e pegar os valores
   }
 
-  getUserStorage() {
-    let users = [];
-
-    if (localStorage.getItem("users")) {
-      users = JSON.parse(localStorage.getItem("users"));
-    }
-    return users;
-  }
-
+ 
   selectAll() {
-    let users = this.getUserStorage();
+    let users = User.getUserStorage();
     users.forEach((dataUser) => {
       let user = new User();
       user.loadFromJSON(dataUser);
