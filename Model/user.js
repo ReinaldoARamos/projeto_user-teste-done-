@@ -113,6 +113,7 @@ class User {
   }
   deleteUser(){
 
-
+   let  users = User.getUserStorage();
+   console.log(users)
   }
 }
