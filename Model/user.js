@@ -114,6 +114,12 @@ class User {
   deleteUser(){
 
    let  users = User.getUserStorage();
-   console.log(users)
+  users.forEach((UserData, Index) => {
+    if (this._id == UserData._id) {
+      
+      
+    }
+    
+  });
   }
 }
