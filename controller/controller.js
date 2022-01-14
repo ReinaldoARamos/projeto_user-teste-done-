@@ -206,16 +206,16 @@ class UserController {
   }
 
  
-  AddLine(dataUser) {
+  AddLine(dataUser) { //data user parametro
     let tr = this.getTr(dataUser); //o valor do let é o que aconteceu dentro do método ficou registrado nela
 
-    this.TableEl.appendChild(tr);
+    this.TableEl.appendChild(tr); //pega a tr do data user e da um apoend child no tr que cria tabelas novas
 
-    this.updateCount();
+    this.updateCount(); //aumenta os admin
   }
 
-  getTr(dataUser, tr = null) {
-    if (tr === null) tr = document.createElement("tr"); //passamos tr como parâmetro opcional, para que caso
+  getTr(dataUser, tr = null) {  //pega o valor dos users e a tr vazia
+    if (tr === null) tr = document.createElement("tr"); //passamos tr como parâmetro opcional, para que caso /create element de tr
     //o user clique em editar e ele perceba que já há uma tr registrada, ele não crie
     //isso pq no editar não criamos uma tr, nos pegamos uma existente
     tr.dataset.user /*nome usado pra guardar, tipo uma var*/ = JSON.stringify(
@@ -223,7 +223,7 @@ class UserController {
     ); //valores recebidos
     //o JSON seirializa o obj(tranforma em string)
 
-    tr.innerHTML =
+    tr.innerHTML = //ineri uma template string dentro do HTML
       //Colocamos o TableId para ele receber o Id da tabela toda
       //inserir comanbdos no HTML
       `  
@@ -239,7 +239,7 @@ class UserController {
         <button type="button" class="btn btn-danger btn-delete btn-xs btn-flat">Excluir</button>
       </td>
     `;
-    this.addEventsTR(tr);
+    this.addEventsTR(tr); //adiciona eventos na tr
     return tr;
   }
   addEventsTR(tr) {
