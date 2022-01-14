@@ -13,8 +13,8 @@ class UserController {
   OnEdit() {
     document
       .querySelector("#box-user-update .btn-cancel")
-      .addEventListener("click", (e) => {
-        this.showPanelCreate();
+      .addEventListener("click", (e) => { //Adiciona o event listener de click
+        this.showPanelCreate(); 
       });
     this.formUpdateEl.addEventListener("submit", (event) => {
       event.preventDefault(); //previne o refresh no envio de formulário
