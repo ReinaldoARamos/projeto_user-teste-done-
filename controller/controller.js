@@ -1,9 +1,9 @@
 class UserController {
   constructor(formId, formUpdateId, TableId) {
     //recebe os ids
-    this.formEl = document.getElementById(formId);
-    this.formUpdateEl = document.getElementById(formUpdateId);
-    this.TableEl = document.getElementById(TableId);
+    this.formEl = document.getElementById(formId); //iD do formulario de criação
+    this.formUpdateEl = document.getElementById(formUpdateId); //Id do formulário de update
+    this.TableEl = document.getElementById(TableId); //Id da table
     console.log(this.formEl);
     this.OnSubmit(); //colocamos o OnSubmit aqui para ele já ser iniciado
     this.selectAll();
@@ -17,48 +17,54 @@ class UserController {
         this.showPanelCreate(); 
       });
     this.formUpdateEl.addEventListener("submit", (event) => {
+      //Pega o formupdate e coloca event listenet submit
+
       event.preventDefault(); //previne o refresh no envio de formulário
 
-      let btn = this.formUpdateEl.querySelector("[type=submit]");
+      let btn = this.formUpdateEl.querySelector("[type=submit]"); //Cria o botao do submit
+      
 
-      btn.disabled = true;
-      let values = this.GetValues(this.formUpdateEl); //recebe os valores por parâmetro
-      let index = this.formUpdateEl.dataset.trIndex; //esse let index pega a localização de index da row
+      btn.disabled = true; //Deixa o botão desabilitado
+      let values = this.GetValues(this.formUpdateEl); //recebe o método get values e passa o o formulário como parametro valores por parâmetro
+      let index = this.formUpdateEl.dataset.trIndex; //esse let index pega a localização de index da row para pegar o usuário espefífico
       let tr = this.TableEl.rows[index]; //essa tr pega o valor retornando pelo index acima
       let userOld = JSON.parse(tr.dataset.user); //o parse torna um obj de fato
       let result = Object.assign({}, userOld, values); //os valores a direita substituem os da esquerad
       //values substitui os valoers que não existem ou que existem em userOld e userOld substitui o vazio
 
-      this.GetPhoto(this.formUpdateEl).then(
-        (content) => {
-          if (!values.photo) {
-            result._photo = userOld._photo;
+      this.GetPhoto(this.formUpdateEl).then(//executa o metodo getphoto
+        (content) => {//recebe os parametros do método
+          if (!values.photo) { //Se a nova imagem nao tiver valor ele mantém o antigo através dp consig
+            result._photo = userOld._photo; //Mantémm a foto como a antiga
+
           } else {
-            result._photo = content;
+            result._photo = content; //Caso haja ele faz um consing dos objetos e coloca a nova
           }
-         let user = new User();
-         user.loadFromJSON(result);
-         user.save();
+         let user = new User(); //Cria um novo objeto
+         user.loadFromJSON(result); //executa o método LoadFromJSON e pega o result(objeto) como parametro
+         user.save(); //método save
 
-        this.getTr(user, tr); //o tr é passado pois já está criado
+        this.getTr(user, tr); //o tr é passado pois já está criado 
         
         
-          this.updateCount();
+          this.updateCount(); //método para aumentar o contador
 
-          this.formUpdateEl.reset();
-          btn.disabled = false;
-          this.showPanelCreate();
+          this.formUpdateEl.reset(); //reseta o formulário para esvaziar os campos
+          btn.disabled = false; //habilita o btn
+          this.showPanelCreate(); //esconde o update e mostra o create dos formularios
         },
         (e) => {
-          console.error(e);
+          console.error(e); //Caso haja erro ele da console log do mesmo
         }
       );
     });
   }
 
   // -- >> OnSubmit executa o código quando algum botão for pressionado(EVent Listener de click*//
-  OnSubmit() {
-    this.formEl.addEventListener(
+  OnSubmit() { //
+   //Método para dar submit nos valores
+  
+   this.formEl.addEventListener(  //adicionba o submit como evento
       "submit",
       /* function  removemos a function pois ela limita o escopo
           entao ela só recebe o evento(que no caso é o submit, e deixa ele pegar o método Get Values
@@ -70,22 +76,22 @@ class UserController {
       ) => {
         event.preventDefault(); //previne o refresh no envio de formulário
 
-        let btn = this.formEl.querySelector("[type=submit]");
+        let btn = this.formEl.querySelector("[type=submit]"); //btn 
 
-        btn.disabled = true;
+        btn.disabled = true; //bnt desabilitado
 
-        let values = this.GetValues(this.formEl); //O problema é que o caminho da imagem
-        if (!values) return false;
+        let values = this.GetValues(this.formEl); //Recebe o valor dos campos do formulário 
+        if (!values) return false; //Se não tiver valores ele retorna false e cancela o resto da função
 
-        this.GetPhoto(this.formEl).then(
+        this.GetPhoto(this.formEl).then(  
           (content) => {
-            values.photo = content;
+            values.photo = content; //recebe o valor da foto como parametro e iguala ao parametro content
 
             values.save(); //adiciona ids, localiza e substitui no array
-            this.AddLine(values); //ele puxa os valores do get values no parametro
+            this.AddLine(values); //ele puxa os valores do get values no parametro e adiciona o Id
 
-            btn.disabled = false;
-            this.formEl.reset();
+            btn.disabled = false; //desabilita os campos
+            this.formEl.reset(); //Deixa os campos vazios
           },
           (e) => {
             console.error(e);
@@ -95,6 +101,7 @@ class UserController {
     );
   }
 
+  /*------------DOCUMENTAR MELHOR DEPOIS---------------------------------*/ 
   GetPhoto(formEl) {
     //prommisse para executar função assincrona
     //preparamos o código para 2 situações, o se funcionar ou se falhar
@@ -124,7 +131,7 @@ class UserController {
       }
     });
   }
-
+/*--------------------------------------------------------------------------*/
   GetValues(
     formEl /*Nesse caso é uma variável passada como parâmetro, e não o let que pega o id*/
   ) {
