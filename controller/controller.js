@@ -132,17 +132,17 @@ class UserController {
     });
   }
 /*--------------------------------------------------------------------------*/
-  GetValues(
+  GetValues( //recebe o valor dos formularios
     formEl /*Nesse caso é uma variável passada como parâmetro, e não o let que pega o id*/
   ) {
     let user = {}; //o Let cria uma var no escopo do método
-    let isValid = true;
+    let isValid = true; 
 
     /*Colocamos o this.formEl entre arrays para transformar em arrays, para assim o for each funcionar */
-    [...formEl.elements].forEach(function (field, index) {
+    [...formEl.elements].forEach(function (field, index) { //Ele entra na array com o forms e passa por todos os elementos
       //remoção do this para que o FOrmEl seja apenas uma variável
-      if (
-        ["name", "password", "email"].indexOf(
+      if ( //Esse if verifica se h´a valores dentro do forms
+        ["name", "password", "email"].indexOf( //recupera a posição dos itens
           field.name /*Nome do campo que passar pelo ForEAch*/
         ) > -1 &&
         !field.value /*field que conrtem os valores*/
@@ -160,6 +160,8 @@ class UserController {
       //esse if gender é para caso o campo gender esteja marcado como checked ele puxe os valores dos campos
       // o For Each passa por todos os campos do HTML(pos causa do Elements do FormsEl, que retorna os campos)
       //indexados
+     
+     /* Verifica se os valores estão com check*/
       if (field.name == "gender") {
         if (field.checked) {
           user[field.name] = field.value;
@@ -175,7 +177,7 @@ class UserController {
       return false;
       //caso nao seja valido(campo vazio) ele para a execução do form
     }
-    return new User(
+    return new User( //Se tudo der certo ele retorna o usuário
       user.name,
       user.gender,
       user.birth,
