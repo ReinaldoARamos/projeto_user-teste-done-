@@ -243,18 +243,18 @@ class UserController {
     return tr;
   }
   addEventsTR(tr) {
-    tr.querySelector(".btn-delete").addEventListener("click", (e) => {
-      if (confirm("Deseja realmente deletar este usuário")) {
-       let user = new User();
-       user.loadFromJSON(JSON.parse(tr.dataset.user))
+    tr.querySelector(".btn-delete").addEventListener("click", (e) => { //adiciona os eventos de click na tr
+      if (confirm("Deseja realmente deletar este usuário")) { //Um confirm nativo do js
+       let user = new User(); //Pega o user
+       user.loadFromJSON(JSON.parse(tr.dataset.user)) //faz um dataser nesse novo user
        //lembrando que JSOn é string e parse o serializa em obj real
-       user.deleteUser();
-       tr.remove();
-        this.updateCount();
+       user.deleteUser(); //Deleta ele da tr
+       tr.remove(); //Remove a tr
+        this.updateCount(); //Reduz um numero
       }
     });
 
-    tr.querySelector(".btn-edit").addEventListener("click", (e) => {
+    tr.querySelector(".btn-edit").addEventListener("click", (e) => { 
       let json = JSON.parse(tr.dataset.user); //JSON são as propriedades de objetos porém não mais instanciados
 
       this.formUpdateEl.dataset.trIndex = tr.sectionRowIndex; //seta o dado na tr do index, no caso, sua localização
